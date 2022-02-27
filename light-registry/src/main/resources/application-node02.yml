@@ -1,0 +1,38 @@
+server:
+  port: 9810
+eureka:
+  instance:
+    hostname: registry02
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.hostname}:${server.port}:${spring.application.name}
+    appname: ${spring.application.name}
+    environment: pro
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@registry01:${server.port}/eureka/,http://${spring.security.user.name}:${spring.security.user.password}@registry03:${server.port}/eureka/
+    healthcheck:
+      enabled: true
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 1000
+    response-cache-update-interval-ms: 1000
+    response-cache-auto-expiration-in-seconds: 60
+spring:
+  profiles:
+    active: node02
+  application:
+    name: light-registry
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  security:
+    user:
+      name: name
+      password: password
