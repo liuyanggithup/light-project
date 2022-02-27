@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.seventeen.starter.common.config.CommonAutoConfiguration,\
+  com.seventeen.starter.common.config.EurekaDelayAutoRegisterConfig,\
+  com.seventeen.starter.common.config.HttpContextTransmitConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.seventeen.starter.common.config.EurekaDelayRegisterProcessor

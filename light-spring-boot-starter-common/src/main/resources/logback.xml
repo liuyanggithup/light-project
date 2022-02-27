@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false" scanPeriod="60 seconds">
+
+    <property resource="application.properties"/>
+    <property name="APP_NAME" value="${app.id}"/>
+    <property name="LOG_HOME" value="logs"/>
+
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([traceId:%X{traceId}]) %clr(parentApp:[%X{parentApp}]) %clr(%-5level) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}/common_log.%d{yyyy-MM-dd.HH}.log</fileNamePattern>
+            <MaxHistory>1</MaxHistory>
+        </rollingPolicy>
+        <!-- encoder 默认配置为 PatternLayoutEncoder -->
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [traceId:%X{traceId}] [parentApp:%X{parentApp}] [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 正常访问日志 -->
+    <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}/access_log.%d{yyyy-MM-dd.HH}.log</fileNamePattern>
+            <MaxHistory>1</MaxHistory>
+        </rollingPolicy>
+        <!-- encoder 默认配置为 PatternLayoutEncoder -->
+        <encoder>
+            <!--%msg：日志消息，%n是换行符-->
+            <pattern>%msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="ACCESS_LOG" level="INFO">
+        <appender-ref ref="ACCESS"/>
+    </logger>
+
+    <logger name="com.seventeen" level="INFO">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <!-- 日志数据级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
