@@ -1,8 +1,6 @@
 package com.seventeen.common.exception;
 
 
-import com.seventeen.common.enums.CodeEnum;
-
 /**
  * 业务异常(warn级别)
  *
@@ -12,7 +10,7 @@ import com.seventeen.common.enums.CodeEnum;
 
 public class WarnException extends RuntimeException {
 
-    private Integer code;
+    private String code;
 
     private String msg;
 
@@ -25,25 +23,17 @@ public class WarnException extends RuntimeException {
         this.msg = msg;
     }
 
-    public WarnException(Integer code, String msg) {
+    public WarnException(String code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    public static WarnException systemError() {
-        return new WarnException(CodeEnum.ERROR.getCode(), CodeEnum.ERROR.getValue());
-    }
-
-    public static WarnException illegalArgument() {
-        return new WarnException(CodeEnum.PARAM_INVALIDATE.getCode(), CodeEnum.PARAM_INVALIDATE.getValue());
-    }
-
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

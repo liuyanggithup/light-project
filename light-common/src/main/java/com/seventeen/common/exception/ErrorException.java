@@ -1,17 +1,14 @@
 package com.seventeen.common.exception;
 
-import com.seventeen.common.enums.CodeEnum;
-
 /**
  * 业务异常(error级别)
  *
  * @author seventeen
  * @date 2018/11/5
  */
-
 public class ErrorException extends RuntimeException {
 
-    private Integer code;
+    private String code;
 
     private String msg;
 
@@ -24,21 +21,17 @@ public class ErrorException extends RuntimeException {
         this.msg = msg;
     }
 
-    public ErrorException(Integer code, String msg) {
+    public ErrorException(String code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    public static ErrorException illegalArgument() {
-        return new ErrorException(CodeEnum.PARAM_INVALIDATE.getCode(), CodeEnum.PARAM_INVALIDATE.getValue());
-    }
-
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

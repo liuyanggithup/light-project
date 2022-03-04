@@ -1,13 +1,11 @@
 package com.seventeen.common.exception;
 
-import com.seventeen.common.enums.CodeEnum;
-
 /**
  * @author seventeen
  */
 public class MqException extends RuntimeException {
 
-    private Integer code;
+    private String code;
 
     private String msg;
 
@@ -20,25 +18,17 @@ public class MqException extends RuntimeException {
         this.msg = msg;
     }
 
-    public MqException(Integer code, String msg) {
+    public MqException(String code, String msg) {
         super(msg);
         this.code = code;
         this.msg = msg;
     }
 
-    public static MqException systemError() {
-        return new MqException(CodeEnum.ERROR.getCode(), CodeEnum.ERROR.getValue());
-    }
-
-    public static MqException illegalArgument() {
-        return new MqException(CodeEnum.PARAM_INVALIDATE.getCode(), CodeEnum.PARAM_INVALIDATE.getValue());
-    }
-
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
